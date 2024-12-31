@@ -4,22 +4,22 @@ import java.io.Serializable;
 public class KimYenaPlayer implements Serializable {
     // Atributos privados para encapsular la información.
     // Apodo del jugador.
-    private String nickname;
+    private String name;
     // Puntuación del jugador.
     private int score;
 
     // Constructor: inicializa los valores de nickname y score al crear un objeto.
-    public KimYenaPlayer(String nickname, int score) {
+    public KimYenaPlayer(String name, int score) {
         // Asignamos el valor del parámetro al atributo.
-        this.nickname = nickname;
+        this.name = name;
         // Usamos 'this' para referirnos al atributo de la clase.
         this.score = score;
     }
 
     // Getter para el atributo nickname.
-    public String getNickname() {
+    public String getName() {
         // Devuelve el apodo del jugador.
-        return nickname;
+        return name;
     }
 
     // Getter para el atributo score.
@@ -38,6 +38,6 @@ public class KimYenaPlayer implements Serializable {
     @Override
     public String toString() {
         // Construimos una cadena legible con los atributos.
-        return "Player{" + "ninkname='" + nickname + '\'' + ", score=" + score + '}';
+        return name + ": " + score + " puntos";
     }
 }
