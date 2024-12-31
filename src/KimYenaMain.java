@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -10,12 +11,17 @@ public class KimYenaMain {
 
         Scanner scanner = new Scanner(System.in);
         // Título de la película a adivinar
-        String movieTitle = "joker";
-        // Título enmascarado. (letras ocultadas)
+        List<String> movieTitles = loadMoviesFromFile("peliculas.txt");
+
+        if (movieTitles.isEmpty()) {
+            System.out.println("No se encontraron películas en el archivo. Asegúrate de que el archivo 'peliculas.txt' existe y contiene títulos.");
+            return;
+        }
+
+        // Escoge un título aleatrio de la lista.
+        String movieTitle = movieTitles.get(new Random().nextInt(movieTitles.size())).toLowerCase();
         String maskedTitle = maskTitle(movieTitle);
-        // Conjunto de letras adivinadas
         Set<Character> guessedLetters = new HashSet<>();
-        // Lista de letras incorrectas adivinadas
         List<Character> wrongLetters = new ArrayList<>();
 
         // Puntuación inicial y número de intentos
@@ -163,9 +169,32 @@ public class KimYenaMain {
         scanner.close();
     }
 
-    // Método para enmascarar el título de la película
+    // Método para enmascarar el título de la película con asteriscos, mantenimiendo espacios y puntuación
     private static String maskTitle(String title) {
-        return title.replaceAll("[a-zA-Z]", "*");
+        StringBuilder masked = new StringBuilder();
+        for (char c : title.toCharArray()) {
+            if (Character.isLetter(c)) {
+                // Sustituye letras por asteriscos
+                masked.append('*');
+            } else {
+                // Mantén espacios y puntuación
+                masked.append(c);
+            }
+        }
+        return masked.toString();
+    }
+
+    private static List<String> loadMoviesFromFile(String filename) {
+        List<String> movies = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                movies.add(line.trim());
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
+        return movies;
     }
 
     // Método para revelar una letra en el título enmascarado
