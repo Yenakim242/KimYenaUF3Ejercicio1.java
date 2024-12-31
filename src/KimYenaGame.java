@@ -21,7 +21,7 @@ public class KimYenaGame {
             // El archivo no exite; informa y continuará con una lista vacía.
             System.out.println("Archivo de ranking no encontrado. Se creará uno nuevo al guardar.");
         } catch (IOException | ClassNotFoundException e) {
-            // Maneja otros errores, como problemas de lectura o formato de archivo.
+            // Maneja otros errores, com problemas de lectura o formato de archivo.
             System.out.println("Error al cargar el ranking: " + e.getMessage());
         }
         // Devuelve la lista de ranking (puede estar vacía si ocurrió un error).
