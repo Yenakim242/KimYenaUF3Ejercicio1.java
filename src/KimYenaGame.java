@@ -3,6 +3,7 @@ import java.io.*;
 import java.util.*;
 
 public class KimYenaGame {
+    // Lista de jugadores con sus puntajes, ordenados por el rannking.
     private List<KimYenaPlayer> topPlayers;
 
     public KimYenaGame() {
@@ -36,8 +37,10 @@ public class KimYenaGame {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(":");
                 if (parts.length == 2) {
-                    String name = parts[0].trim(); // Elimina espacios al principio y al final
-                    int score = Integer.parseInt(parts[1].trim()); // Elimina espacios antes de convertir
+                    // Elimina espacios al principio y al final
+                    String name = parts[0].trim();
+                    // Elimina espacios antes de convertir
+                    int score = Integer.parseInt(parts[1].trim());
                     players.add(new KimYenaPlayer(name, score));
                 }
             }
