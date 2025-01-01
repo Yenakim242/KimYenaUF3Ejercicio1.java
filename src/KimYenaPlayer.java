@@ -1,7 +1,6 @@
 import java.io.Serializable;
 
 public class KimYenaPlayer implements Serializable {
-    private static final long serialVersionUID = 1L;
     // Atributos privados para encapsular la información.
     // Apodo del jugador.
     private String name;

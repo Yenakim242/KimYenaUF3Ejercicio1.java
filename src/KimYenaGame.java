@@ -3,45 +3,57 @@ import java.io.*;
 import java.util.*;
 
 public class KimYenaGame {
-    // Nombre del archivo donde se almacenará el ranking.
-    private static final String RANKING_FILE = "ranking.dat";
+    private List<String> movies;
+    private List<KimYenaPlayer> ranking;
 
-    // Método para cargar el ranking desde el archivo
-    public List<KimYenaPlayer> loadRanking() {
-        // Crea una lista vacía almacenar el ranking.
-        List<KimYenaPlayer> ranking = new ArrayList<>();
-        // Intenta abrir el archivo de ranking y leer su contenido.
-        try (BufferedReader reader = new BufferedReader(new FileReader(RANKING_FILE))){
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 2) {
-                    String name = parts[0].trim();
-                    int score = Integer.parseInt(parts[1].trim());
-                    ranking.add(new KimYenaPlayer(name, score));
-                }
-            }
-        } catch (FileNotFoundException e) {
-            // El archivo no exite; informa y continuará con una lista vacía.
-            System.out.println("El archivo de ranking no encontrado. Se creará uno nuevo al guardar.");
-        } catch (IOException e) {
-            // Maneja otros errores, com problemas de lectura o formato de archivo.
-            System.out.println("Error al leer el archivo de ranking: " + e.getMessage());
-        }
-        // Devuelve la lista de ranking (puede estar vacía si ocurrió un error).
-        return ranking;
+    public KimYenaGame() {
+        movies = new ArrayList<>();
+        ranking = new ArrayList<>();
     }
 
-    // Método para guardar el ranking en el archivo
-    public void saveRanking(List<KimYenaPlayer> ranking) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RANKING_FILE))) {
-            for (KimYenaPlayer player : ranking) {
-                writer.write(player.getName() + "," + player.getScore());
-                writer.newLine();
+    // Load movies from peliculas.txt
+    public void loadMoviesFromFile(String fileName) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                movies.add(line.trim());
             }
-        } catch (IOException e) {
-            // Maneja errores que ocurran al guardar el archivo.
-            System.out.println("Error al guardar el ranking: " + e.getMessage());
         }
+    }
+
+    // Get a random movie
+    public String getRandomMovie() {
+        if (movies.isEmpty()) return null;
+        return  movies.get(new Random().nextInt(movies.size()));
+    }
+
+    // Load ranking from ranking.dat
+    public void loadRanking(String fileName) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            ranking = (List<KimYenaPlayer>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            // Default to empty if file not found
+            ranking = new ArrayList<>();
+        }
+    }
+
+    // Save ranking to ranking.dat
+    public void saveRanking(String fileName) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(ranking);
+        } catch (IOException e) {
+            System.out.println("Error save ranking: " + e.getMessage());
+        }
+    }
+
+    // Add player to ranking
+    public void addPlayerToRanking(String name, int score) {
+        ranking.add(new KimYenaPlayer(name, score));
+        ranking.sort((p1, p2) -> Integer.compare(p2.getScore(), p1.getScore()));
+    }
+
+    // Get the top players
+    public List<KimYenaPlayer> getTopPlayers() {
+        return ranking;
     }
 }
