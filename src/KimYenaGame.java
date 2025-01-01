@@ -1,9 +1,6 @@
 // Importa clases para trabajar con archivos y flujos.
 import java.io.*;
-// Importa la clase ArrayList.
-import java.util.ArrayList;
-// Importa la interfaz List.
-import java.util.List;
+import java.util.*;
 
 public class KimYenaGame {
     // Nombre del archivo donde se almacenará el ranking.
@@ -14,15 +11,22 @@ public class KimYenaGame {
         // Crea una lista vacía almacenar el ranking.
         List<KimYenaPlayer> ranking = new ArrayList<>();
         // Intenta abrir el archivo de ranking y leer su contenido.
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(RANKING_FILE))){
-            // Deserializa el objeto y lo convierte a una lista de jugadores.
-            ranking = (List<KimYenaPlayer>) ois.readObject();
+        try (BufferedReader reader = new BufferedReader(new FileReader(RANKING_FILE))){
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 2) {
+                    String name = parts[0].trim();
+                    int score = Integer.parseInt(parts[1].trim());
+                    ranking.add(new KimYenaPlayer(name, score));
+                }
+            }
         } catch (FileNotFoundException e) {
             // El archivo no exite; informa y continuará con una lista vacía.
             System.out.println("El archivo de ranking no encontrado. Se creará uno nuevo al guardar.");
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             // Maneja otros errores, com problemas de lectura o formato de archivo.
-            System.out.println("Error al cargar el ranking: " + e.getMessage());
+            System.out.println("Error al leer el archivo de ranking: " + e.getMessage());
         }
         // Devuelve la lista de ranking (puede estar vacía si ocurrió un error).
         return ranking;
@@ -30,10 +34,11 @@ public class KimYenaGame {
 
     // Método para guardar el ranking en el archivo
     public void saveRanking(List<KimYenaPlayer> ranking) {
-        // Intenta escribir el ranking en el archivo.
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(RANKING_FILE))) {
-            // Serializa la lista de jugadores y la guarda en el archivo.
-            oos.writeObject(ranking);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RANKING_FILE))) {
+            for (KimYenaPlayer player : ranking) {
+                writer.write(player.getName() + "," + player.getScore());
+                writer.newLine();
+            }
         } catch (IOException e) {
             // Maneja errores que ocurran al guardar el archivo.
             System.out.println("Error al guardar el ranking: " + e.getMessage());
