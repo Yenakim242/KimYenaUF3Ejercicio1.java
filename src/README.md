@@ -45,3 +45,34 @@ En el workspace del proyecto la aplicación dispondrá de un fichero binario don
 
 En ambos casos mostraremos el ranking por consola y terminaremos la aplicación
 
+# Juego de Adivinar Película
+
+Este es un juego interactivo de consola donde el jugador tiene que adivinar el título de una película seleccionada aleatoriamente. El jugador puede adivinar letras o intentar adivinar el título completo.
+
+## Funcionalidades
+
+- **Selección aleatoria de película**: El juego selecciona una película de una lista predefinida de películas.
+- **Adivinar una letra**: El jugador puede adivinar una letra del título. Si la letra está en el título, se revela en su lugar correspondiente.
+- **Adivinar el título completo**: El jugador puede intentar adivinar el título completo de la película en cualquier momento.
+- **Validación de entradas**: Se gestionan entradas inválidas y letras repetidas.
+- **Ranking**: Al final del juego, se guarda la puntuación del jugador y se muestra el ranking con los mejores puntajes.
+
+## Requisitos
+
+- Java 11 o superior
+- IntelliJ IDEA o cualquier IDE compatible con Java
+
+### Explicación de cada sección:
+1. **Nombre y descripción del juego**: Un breve resumen de lo que hace tu juego.
+2. **Funcionalidades**: Explicas las características principales del juego.
+3. **Requisitos**: Especificas las dependencias necesarias para ejecutar el proyecto (Java, IDE).
+4. **Cómo ejecutar el proyecto**: Instrucciones para clonar el repositorio y ejecutar el proyecto.
+5. **Estructura del proyecto**: Describe los archivos y su propósito en el juego.
+6. **Funcionalidades del juego**: Detalles sobre cómo funciona el juego, las opciones del menú, y cómo se juega.
+7. **Cómo contribuir**: Si otros desarrolladores quieren ayudar en el proyecto.
+8. **Licencia**: Si decides añadir una licencia para el uso del código.
+
+Puedes adaptar las partes del README a tu proyecto específico, pero esto te da una buena base. ¡Espero que te sirva!
+
+
+
