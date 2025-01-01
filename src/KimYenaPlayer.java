@@ -1,7 +1,7 @@
-// Permite que los objetos de esta clase puedan guardarse y recuperarse como flujo de bytes.
 import java.io.Serializable;
 
 public class KimYenaPlayer implements Serializable {
+    private static final long serialVersionUID = 1L;
     // Atributos privados para encapsular la información.
     // Apodo del jugador.
     private String name;
@@ -26,12 +26,6 @@ public class KimYenaPlayer implements Serializable {
     public int getScore() {
         // Devuelve la puntuación del jugador.
         return score;
-    }
-
-    // Setter para el atributo score.
-    public void setScore(int score) {
-        // Modifica la puntuación del jugador.
-        this.score = score;
     }
 
     // Sobrescribimos el método toString() para personalizar cómo se imprime un objeto.
