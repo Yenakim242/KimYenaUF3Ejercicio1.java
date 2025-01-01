@@ -7,10 +7,9 @@ public class KimYenaMain {
         // Crea una instancia de KimYenaGame para gestionar el juego
         KimYenaGame game = new KimYenaGame();
         // Carga el ranking desde el archivo
-        List<KimYenaPlayer> ranking = game.loadRanking();
+        List<KimYenaPlayer> ranking = game.loadRanking("ranking.dat");
 
         Scanner scanner = new Scanner(System.in);
-        // Título de la película a adivinar
         List<String> movieTitles = loadMoviesFromFile("peliculas.txt");
 
         if (movieTitles.isEmpty()) {
@@ -139,22 +138,17 @@ public class KimYenaMain {
         }
 
         // Si la puntuación es suficiente, permite el jugador añadir su nombre al ranking
-        if (points > 0 && rankingEligible(points, ranking)) {
+        if (points > 0 && rankingEligible(points, game.getTopPlayers())) {
             String nickname;
             do {
                 System.out.print("Introduce un nickname para el ranking: ");
                 nickname = scanner.nextLine();
-            } while (nickNameExists(nickname, ranking));
+            } while (nickNameExists(nickname, game.getTopPlayers()));
 
-            ranking.add(new KimYenaPlayer(nickname, points));
-            // Ordena el ranking por puntuación
-            ranking.sort(Comparator.comparingInt(KimYenaPlayer::getScore).reversed());
-            if (ranking.size() > 5) {
-                // Mantiene solo los 5 mejores jugadores
-                ranking.remove(ranking.size() - 1);
-            }
-            // Guarda el ranking en el archivo
-            game.saveRanking(ranking);
+            // Añadir al ranking
+            game.addPlayerToRanking(nickname, points);
+            // Guardar al ranking
+            game.saveRanking("ranking.dat");
         } else {
             System.out.println("Tu puntuación no es suficiente para entrar al ranking.");
         }

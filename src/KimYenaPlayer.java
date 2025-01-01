@@ -1,6 +1,5 @@
-import java.io.Serializable;
 
-public class KimYenaPlayer implements Serializable {
+public class KimYenaPlayer {
     // Atributos privados para encapsular la información.
     // Apodo del jugador.
     private String name;
